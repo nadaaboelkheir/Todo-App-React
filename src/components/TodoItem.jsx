@@ -9,9 +9,27 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { useDrag } from "react-dnd";
+
 const TodoItem = ({ todo, toggleTodo, deleteTodo, editeTodo }) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: "todo",
+    item: { id: todo.id, completed: todo.completed },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
   return (
-    <Card sx={{ minWidth: 275, mt: 3, borderRadius: "10px" }}>
+    <Card
+      ref={drag}
+      sx={{
+        minWidth: 275,
+        mt: 3,
+        borderRadius: "10px",
+        opacity: isDragging ? 0.5 : 1,
+      }}
+    >
       <CardContent>
         <Typography
           variant="h5"
@@ -23,8 +41,8 @@ const TodoItem = ({ todo, toggleTodo, deleteTodo, editeTodo }) => {
         >
           {todo.title}
         </Typography>
-        <Typography color="text.secondary">
-           {todo.description}
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          {todo.description}
         </Typography>
         <Typography color="text.secondary">
           {todo.completed ? "Completed At " : "Added At"} {todo.date}

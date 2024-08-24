@@ -2,10 +2,37 @@ import Grid from "@mui/material/Grid";
 import TodoItem from "./TodoItem";
 import Typography from "@mui/material/Typography";
 import { useContext } from "react";
+import { useDrop } from "react-dnd";
 import { TodoContext } from "../context/TodoContext";
 
 const TodoList = () => {
-  const { todos, deleteTodo, toggleTodo, editeTodo } = useContext(TodoContext);
+  const { todos, toggleTodo, deleteTodo, editeTodo } = useContext(TodoContext);
+
+  // Drop zone for incomplete todos (accept completed todos)
+  const [{ isOverIncomplete }, dropIncomplete] = useDrop({
+    accept: "todo",
+    drop: (todo) => {
+      if (todo.completed) {
+        toggleTodo(todo.id);
+      }
+    },
+    collect: (monitor) => ({
+      isOverIncomplete: !!monitor.isOver(),
+    }),
+  });
+
+  // Drop zone for completed todos (accept incomplete todos)
+  const [{ isOverComplete }, dropComplete] = useDrop({
+    accept: "todo",
+    drop: (todo) => {
+      if (!todo.completed) {
+        toggleTodo(todo.id);
+      }
+    },
+    collect: (monitor) => ({
+      isOverComplete: !!monitor.isOver(),
+    }),
+  });
 
   return (
     <Grid
@@ -17,16 +44,19 @@ const TodoList = () => {
         justifyContent: "center",
       }}
     >
+      {/* Incomplete Todos */}
       <Grid
         item
         xs={12}
         md={6}
         lg={3}
+        ref={dropIncomplete}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: "10px",
+          backgroundColor: isOverIncomplete ? "#15101C" : "transparent",
         }}
       >
         <Typography
@@ -56,16 +86,19 @@ const TodoList = () => {
           ))}
       </Grid>
 
+      {/* Completed Todos */}
       <Grid
         item
         xs={12}
         md={6}
         lg={3}
+        ref={dropComplete}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: "10px",
+          backgroundColor: isOverComplete ? "#15101C" : "transparent",
         }}
       >
         <Typography
