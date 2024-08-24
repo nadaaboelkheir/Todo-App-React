@@ -6,7 +6,7 @@ import { useDrop } from "react-dnd";
 import { TodoContext } from "../context/TodoContext";
 
 const TodoList = () => {
-  const { todos, toggleTodo, deleteTodo, editeTodo } = useContext(TodoContext);
+  const { todos, toggleTodo, deleteTodo } = useContext(TodoContext);
 
   // Drop zone for incomplete todos (accept completed todos)
   const [{ isOverIncomplete }, dropIncomplete] = useDrop({
@@ -81,7 +81,6 @@ const TodoList = () => {
               todo={todo}
               toggleTodo={toggleTodo}
               deleteTodo={deleteTodo}
-              editeTodo={editeTodo}
             />
           ))}
       </Grid>
@@ -123,7 +122,7 @@ const TodoList = () => {
               todo={todo}
               toggleTodo={toggleTodo}
               deleteTodo={deleteTodo}
-              editeTodo={editeTodo}
+              
             />
           ))}
       </Grid>

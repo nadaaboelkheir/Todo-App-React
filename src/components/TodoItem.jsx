@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useDrag } from "react-dnd";
 
-const TodoItem = ({ todo, toggleTodo, deleteTodo, editeTodo }) => {
+const TodoItem = ({ todo, toggleTodo, deleteTodo }) => {
   const [{ isDragging }, drag] = useDrag({
     type: "todo",
     item: { id: todo.id, completed: todo.completed },
@@ -56,11 +56,7 @@ const TodoItem = ({ todo, toggleTodo, deleteTodo, editeTodo }) => {
         >
           <DeleteIcon />
         </IconButton>
-        <IconButton
-          color="error"
-          aria-label="delete"
-          onClick={() => editeTodo(todo.id)}
-        >
+        <IconButton color="error" aria-label="delete">
           <EditNoteIcon />
         </IconButton>
         <Checkbox

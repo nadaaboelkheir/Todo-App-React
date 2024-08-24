@@ -20,7 +20,7 @@ export const TodoProvider = ({ children }) => {
     saveToLocalStorage(todos);
   }, [todos]);
 
-  const addTodo = (title,description) => {
+  const addTodo = (title, description) => {
     if (title.trim()) {
       setTodos([
         ...todos,
@@ -54,9 +54,11 @@ export const TodoProvider = ({ children }) => {
     );
   };
   const editTodo = (id, title, description) => {
-    if (title.trim()&&description.trim()) {
+    if (title.trim() && description.trim()) {
       setTodos(
-        todos.map((todo) => (todo.id === id ? { ...todo, title, description } : todo))
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, title, description } : todo
+        )
       );
     } else {
       alert("Please enter a valid title");
