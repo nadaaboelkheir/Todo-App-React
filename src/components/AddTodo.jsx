@@ -1,15 +1,20 @@
 import { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
-
 const AddTodo = () => {
   const { addTodo } = useContext(TodoContext);
 
   return (
     <form
+      style={{
+        width: "60%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       onSubmit={(e) => {
         e.preventDefault();
         addTodo(e.target[0].value, e.target[1].value);
-        e.target[0].value = ""; 
+        e.target[0].value = "";
         e.target[1].value = "";
       }}
     >
@@ -17,7 +22,7 @@ const AddTodo = () => {
         type="text"
         placeholder="Enter your todo"
         style={{
-          width: "300px",
+          width: "90%",
           height: "30px",
           marginRight: "10px",
           borderRadius: "5px",
@@ -28,24 +33,27 @@ const AddTodo = () => {
         type="text"
         placeholder="Enter your des"
         style={{
-          width: "300px",
+          width: "90%",
           height: "30px",
           marginRight: "10px",
           borderRadius: "5px",
           padding: "5px",
         }}
       />
-      <input
+
+      <button
         type="submit"
-        value="+ Add Todo"
         style={{
           backgroundColor: "#9E78CF",
           color: "white",
-          width: "130px",
+          width: "20%",
           height: "40px",
           borderRadius: "5px",
+          textAlign: "center",
         }}
-      />
+      >
+        + Add
+      </button>
     </form>
   );
 };
