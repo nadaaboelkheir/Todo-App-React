@@ -1,0 +1,59 @@
+/* eslint-disable react/prop-types */
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Checkbox,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+const TodoItem = ({ todo, toggleTodo, deleteTodo, editeTodo }) => {
+  return (
+    <Card sx={{ minWidth: 275, mt: 3, borderRadius: "10px" }}>
+      <CardContent>
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{
+            mb: 2,
+            textDecoration: todo.completed ? "line-through" : "none",
+          }}
+        >
+          {todo.title}
+        </Typography>
+        <Typography color="text.secondary">
+           {todo.description}
+        </Typography>
+        <Typography color="text.secondary">
+          {todo.completed ? "Completed At " : "Added At"} {todo.date}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <IconButton
+          color="error"
+          aria-label="delete"
+          onClick={() => deleteTodo(todo.id)}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <IconButton
+          color="error"
+          aria-label="delete"
+          onClick={() => editeTodo(todo.id)}
+        >
+          <EditNoteIcon />
+        </IconButton>
+        <Checkbox
+          checked={todo.completed}
+          onChange={() => toggleTodo(todo.id)}
+          inputProps={{ "aria-label": "complete todo" }}
+          color="success"
+        />
+      </CardActions>
+    </Card>
+  );
+};
+
+export default TodoItem;
