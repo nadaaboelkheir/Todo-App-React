@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useContext } from "react";
 import { useDrop } from "react-dnd";
 import { TodoContext } from "../context/TodoContext";
-
+import { Badge } from "@mui/material";
 const TodoList = () => {
   const { todos, toggleTodo, deleteTodo } = useContext(TodoContext);
 
@@ -71,7 +71,16 @@ const TodoList = () => {
             mb: 2,
           }}
         >
-          Incomplete Todos
+          <Badge
+            badgeContent={todos.filter((todo) => !todo.completed).length}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            Incomplete Todos
+          </Badge>
         </Typography>
         {todos
           .filter((todo) => !todo.completed)
@@ -112,7 +121,13 @@ const TodoList = () => {
             mb: 2,
           }}
         >
-          Completed Todos
+          <Badge
+            badgeContent={todos.filter((todo) => todo.completed).length}
+            color="success"
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            Completed Todos
+          </Badge>
         </Typography>
         {todos
           .filter((todo) => todo.completed)
@@ -122,7 +137,6 @@ const TodoList = () => {
               todo={todo}
               toggleTodo={toggleTodo}
               deleteTodo={deleteTodo}
-              
             />
           ))}
       </Grid>
